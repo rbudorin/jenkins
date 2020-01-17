@@ -2,7 +2,7 @@ import hudson.tasks.test.AbstractTestResultAction
 import hudson.model.Actionable
 
 
-def sendTelegramStart(token, chatId) {
+def notifyStart(token, chatId) {
     message = "<b>Build started</b>\n\n" +
       "Project: <a href=\"$JOB_URL\">$JOB_NAME</a> \n" +
       "Build number: <a href=\"$BUILD_URL\">$BUILD_DISPLAY_NAME</a> \n" +
@@ -20,7 +20,7 @@ def sendTelegramStart(token, chatId) {
 }
 
 @NonCPS
-def sendTelegramEnd(token, chatId) {
+def notifyEnd(token, chatId) {
     def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
     def testReport = ""
 
