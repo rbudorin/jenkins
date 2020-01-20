@@ -4,9 +4,9 @@ import hudson.model.Actionable
 
 def notifyStart(token, chatId) {
     message = "<b>Build started</b>\n\n" +
-      "Project: <a href=\"$JOB_URL\">$JOB_NAME</a> \n" +
+      "Project: <a href=\"$JOB_URL\">$JOB_BASE_NAME</a> \n" +
       "Build number: <a href=\"$BUILD_URL\">$BUILD_DISPLAY_NAME</a> \n" +
-      "Branch: GIT_BRANCH"
+      "Branch: $GIT_BRANCH"
     
     def encodedMessage = URLEncoder.encode(message, "UTF-8")
     
@@ -37,10 +37,10 @@ def notifyEnd(token, chatId) {
     }
     
     message = "<b>Build completed</b>\n\n" +
-        "Project: <a href=\"$JOB_URL\">$JOB_NAME</a> \n" +
+        "Project: <a href=\"$JOB_URL\">$JOB_BASE_NAME</a> \n" +
         "Status: $currentBuild.currentResult\n" +
         "Build number: <a href=\"$BUILD_URL\">$BUILD_DISPLAY_NAME</a> \n" +
-        "Branch: GIT_BRANCH\n\n" +
+        "Branch: $GIT_BRANCH\n\n" +
         "Test results\n" + 
         "  $testReport"
     
