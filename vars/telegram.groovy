@@ -19,6 +19,23 @@ def notifyStart(token, chatId) {
     return response
 }
 
+def notifyFail(token, chatId) {
+    message = "<b>Build failed</b>\n\n" +
+      "Project: <a href=\"$JOB_URL\">$JOB_NAME</a> \n" +
+      "Build number: <a href=\"$BUILD_URL\">$BUILD_DISPLAY_NAME</a> \n" +
+      "Branch: $BRANCH_NAME"
+
+    def encodedMessage = URLEncoder.encode(message, "UTF-8")
+
+    response = httpRequest (consoleLogResponseBody: true,
+        contentType: 'APPLICATION_JSON',
+        httpMode: 'GET',
+        url: "https://api.telegram.org/bot$token/sendMessage?parse_mode=HTML&text=$encodedMessage&chat_id=$chatId&disable_web_page_preview=false",
+        validResponseCodes: '200')
+
+    return response
+}
+
 @NonCPS
 def notifyEnd(token, chatId) {
     def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
